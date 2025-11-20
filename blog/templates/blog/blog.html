@@ -1,0 +1,104 @@
+{% extends "proyectoWebApp/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .post-card {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: #f8f9fa;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .post-title {
+        color: #ffc107;
+        font-weight: bold;
+    }
+
+    .post-content {
+        font-size: 1.25rem;
+        color: #e9ecef;
+    }
+
+    .author-label {
+        color: #17a2b8;
+        font-weight: bold;
+    }
+
+    .categories-section {
+        background: #212529;
+        color: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .categories-title {
+        color: #ffc107;
+        font-weight: bold;
+    }
+
+    .category-btn {
+        border-color: #ffc107;
+        color: #ffc107;
+        margin: 0.25rem;
+        text-decoration: none;
+        padding: 0.375rem 0.75rem;
+        border: 1px solid;
+        border-radius: 0.25rem;
+    }
+
+    .category-btn:hover {
+        background-color: #ffc107;
+        color: #212529;
+        text-decoration: none;
+    }
+</style>
+
+<div class="container py-5">
+    {% for post in posts %}
+        <section class="page-section clearfix mb-5">
+            <div class="container">
+                <div class="post-card">
+                    <div class="row g-0">
+                        <!-- Imagen del post -->
+                        <div class="col-md-5">
+                            {% if post.imagen %}
+                                <img src="{{ post.imagen.url }}" class="img-fluid h-100 object-fit-cover rounded-start" 
+                                     alt="{{ post.titulo }}">
+                            {% else %}
+                                <img src="{% static 'images/default.jpg' %}" class="img-fluid h-100 object-fit-cover rounded-start" 
+                                     alt="Imagen por defecto">
+                            {% endif %}
+                        </div>
+                        <!-- Contenido del post -->
+                        <div class="col-md-7 p-4 d-flex flex-column justify-content-center">
+                            <h2 class="post-title mb-3">
+                                {{ post.titulo }}
+                            </h2>
+                            <p class="post-content">{{ post.contenido }}</p>
+                            <div class="mt-3 text-start">
+                                <span class="author-label">✍️ Autor:</span> 
+                                <span>{{ post.autor }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endfor %}
+
+    <!-- Categorías -->
+    <section class="text-center mt-5">
+        <div class="categories-section w-75 mx-auto">
+            <h5 class="categories-title mb-3">📚 Categorías:</h5>
+            {% for post in posts %}
+                {% for categoria in post.categorias.all %}
+                    <a href="{% url 'categoria' categoria.id %}" class="category-btn">{{ categoria.nombre }}</a>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

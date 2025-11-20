@@ -1,0 +1,64 @@
+{% extends "proyectoWebApp/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="login-container">
+    <form method="post" action="">
+        {% csrf_token %}
+        <h2 class="login-title">Iniciar Sesión</h2>
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success w-100 mt-3">Ingresar</button>
+    </form>
+</div>
+
+<style>
+/* Contenedor centrado */
+.login-container {
+    max-width: 400px;
+    margin: 80px auto;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 40px 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+/* Título del formulario */
+.login-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Estilo del botón */
+.btn-success {
+    background: linear-gradient(135deg, #198754, #20c997);
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #157347, #198754);
+    box-shadow: 0 6px 16px rgba(25, 135, 84, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .login-container {
+        margin: 40px 20px;
+        padding: 30px 20px;
+    }
+
+    .login-title {
+        font-size: 24px;
+    }
+}
+</style>
+{% endblock %}

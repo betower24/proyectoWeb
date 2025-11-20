@@ -1,0 +1,155 @@
+{% extends "proyectoWebApp/base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    /* Estilos para el contenedor principal */
+    .container {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Estilos para las cards de productos */
+    .card {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease-in-out;
+        margin-bottom: 20px;
+        background-color: #fff;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+
+    /* Estilos para las imágenes */
+    .card-img-top {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    /* Estilos para el cuerpo de la card */
+    .card-body {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        min-height: 48px;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #666;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .availability {
+        font-size: 0.9rem;
+        margin: 5px 0;
+    }
+
+    .available {
+        color: #28a745;
+        font-weight: 500;
+    }
+
+    .not-available {
+        color: #dc3545;
+        font-weight: 500;
+    }
+
+    /* Estilos para el footer de la card */
+    .card-footer {
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-top: 1px solid #e0e0e0;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        text-align: center;
+    }
+
+    /* Estilos para el botón */
+    .btn-success {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        background-color: #28a745;
+        border: none;
+        color: white;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-success:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .col-md-3 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .col-md-3 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+        
+        .card-img-top {
+            height: 250px;
+        }
+    }
+</style>
+
+<div class="container">
+    <div style="float: right;">
+        {% if request.user.is_authenticated %}
+        {% include "carro/widget.html" %}
+        {% else %}
+        <div class="alert alert-danger text-center">Haz primero login</div>
+        {% endif %}
+    </div>
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-md-3">
+            <div class="card" style="width: 100%; margin: 5px 5px;">
+                <img src="{{producto.imagen.url}}" class="card-img-top" alt="{{producto.nombre}}">
+                <div class="card-body">
+                    <h6 class="card-title">{{producto.nombre}}</h6>
+                    <p class="card-text">{{producto.precio}} MX</p>
+                    <p class="card-text">{{producto.disponibilidad}}</p>
+                    <p class="availability {% if producto.disponible %}available{% else %}not-available{% endif %}">
+                        {% if producto.disponibilidad %}Disponible{% else %}No disponible{% endif %}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'carro:agregar' producto.id %}" 
+                       class="btn btn-success" 
+                       {% if not producto.disponible %}disabled{% endif %}>
+                        Agregar al carro
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

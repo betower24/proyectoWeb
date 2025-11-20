@@ -1,0 +1,59 @@
+{% extends "proyectoWebApp/base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Sección de Bienvenida -->
+<section class="page-section py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            
+            <!-- Imagen destacada -->
+            <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.2s">
+                <img src="{% static 'proyectoWebApp/img/utfv.png' %}" 
+                     alt="Imagen principal de la librería" 
+                     class="img-fluid rounded-4 shadow-lg border border-success border-3">
+            </div>
+
+            <!-- Mensaje de presentación -->
+            <div class="col-lg-6 wow fadeInRight text-center" data-wow-delay="0.4s">
+                <div class="p-5 bg-white bg-opacity-90 rounded-4 shadow-lg">
+                    <h2 class="mb-4">
+                        <span class="d-block text-uppercase fw-light fs-5 text-success">Puntualidad</span>
+                        <span class="d-block fs-2 fw-bold text-dark">El mejor stock para ti</span>
+                    </h2>
+                    <p class="mb-4 text-muted fs-5">
+                        Entregamos tus libros favoritos a la puerta de tu casa en menos de <strong>48 horas</strong> con envío normal, o en menos de <strong>24 horas</strong> con envío express.
+                    </p>
+                    <a href="{% url 'tienda' %}" class="btn btn-success btn-lg px-5 py-2 shadow-sm rounded-pill">
+                        🚀 Explora la Tienda
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Compromiso -->
+<section class="page-section py-5" style="background: linear-gradient(135deg, #059669 0%, #14B8A6 100%);">
+    <div class="container">
+        <div class="row justify-content-center text-white">
+            <div class="col-xl-10 wow fadeInUp text-center" data-wow-delay="0.3s">
+                <div class="p-5 rounded-4 shadow-lg" style="background-color: rgba(0, 0, 0, 0.25); backdrop-filter: blur(6px);">
+                    <h2 class="mb-4">
+                        <span class="d-block text-uppercase fw-light fs-5 text-warning">Compromiso total</span>
+                        <span class="d-block fs-2 fw-bold">Garantizado</span>
+                    </h2>
+                    <p class="mb-4 fs-5">
+                        En <strong>Gestión de Pedidos - Librería</strong>, combinamos la <em>pasión por los libros</em> con tecnología avanzada para asegurar entregas puntuales, eficientes y con seguimiento en tiempo real.
+                    </p>
+                    <a href="{% url 'contacto' %}" class="btn btn-outline-light btn-lg px-5 py-2 rounded-pill shadow-sm">
+                        📬 Contáctanos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
