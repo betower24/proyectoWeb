@@ -78,9 +78,23 @@ WSGI_APPLICATION = "proyectoWeb.wsgi.application"
 # -----------------------------
 # Base de datos
 # -----------------------------
-DATABASES = {
-    "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
-}
+import os
+import dj_database_url
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.config(default=DATABASE_URL)
+    }
+else:
+    # Usa SQLite en memoria o archivo temporal si no hay DATABASE_URL (ideal para Vercel)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": "/tmp/db.sqlite3",  # Vercel permite escribir en /tmp
+        }
+    }
 
 # -----------------------------
 # Archivos estáticos y media (OBLIGATORIO EN VERCEL)
