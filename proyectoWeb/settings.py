@@ -88,12 +88,12 @@ WSGI_APPLICATION = "proyectoWeb.wsgi.application"
 # Base de Datos: NEON (Postgres)
 # -----------------------------
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=True,
-    )
+    "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
+SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-local-secret")
+DEBUG = os.getenv("DEBUG", "False") == "True"
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
+
 
 # -----------------------------
 # Validación de contraseñas
@@ -138,3 +138,8 @@ EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # ... el resto de middlewares que ya tengas
+]
